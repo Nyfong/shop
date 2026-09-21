@@ -1,28 +1,12 @@
 basePath: /
 definitions:
-  model.Product:
+  model.APIResponse:
     properties:
-      category:
+      datetime:
         type: string
-      description:
-        type: string
-      id:
+      payload: {}
+      status:
         type: integer
-      image:
-        type: string
-      price:
-        type: number
-      rating:
-        $ref: '#/definitions/model.Rating'
-      title:
-        type: string
-    type: object
-  model.Rating:
-    properties:
-      count:
-        type: integer
-      rate:
-        type: number
     type: object
 host: localhost:8080
 info:
@@ -40,22 +24,47 @@ paths:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/model.Product'
-            type: array
+            $ref: '#/definitions/model.APIResponse'
         "500":
           description: Internal Server Error
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/model.APIResponse'
         "502":
           description: Bad Gateway
           schema:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/definitions/model.APIResponse'
       summary: Get all products
+      tags:
+      - Shop
+  /shop/{id}:
+    get:
+      description: Get a single product from Fake Store API
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.APIResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/model.APIResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/model.APIResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/model.APIResponse'
+      summary: Get single product
       tags:
       - Shop
 swagger: "2.0"

@@ -29,28 +29,66 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Product"
-                            }
+                            "$ref": "#/definitions/model.APIResponse"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/model.APIResponse"
                         }
                     },
                     "502": {
                         "description": "Bad Gateway",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/model.APIResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/shop/{id}": {
+            "get": {
+                "description": "Get a single product from Fake Store API",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Shop"
+                ],
+                "summary": "Get single product",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.APIResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/model.APIResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/model.APIResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/model.APIResponse"
                         }
                     }
                 }
@@ -58,40 +96,15 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "model.Product": {
+        "model.APIResponse": {
             "type": "object",
             "properties": {
-                "category": {
+                "datetime": {
                     "type": "string"
                 },
-                "description": {
-                    "type": "string"
-                },
-                "id": {
+                "payload": {},
+                "status": {
                     "type": "integer"
-                },
-                "image": {
-                    "type": "string"
-                },
-                "price": {
-                    "type": "number"
-                },
-                "rating": {
-                    "$ref": "#/definitions/model.Rating"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "model.Rating": {
-            "type": "object",
-            "properties": {
-                "count": {
-                    "type": "integer"
-                },
-                "rate": {
-                    "type": "number"
                 }
             }
         }

@@ -17,7 +17,8 @@ import (
 //	@BasePath		/
 func main() {
 
-	http.HandleFunc("/shop", route.GetAllFromShop)
+    http.HandleFunc("GET /shop", route.GetAllFromShop)
+    http.HandleFunc("GET /shop/{id}", route.GetSingleProduct)
 
 	http.HandleFunc("/docs/", httpSwagger.WrapHandler)
 
